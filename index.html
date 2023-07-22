@@ -1,0 +1,73 @@
+<html>
+	<font id="font" size="8" color="green">Final test lab</font><br><br>
+	<p id="p1">Number of rows: <input type="text" id="t1" /></p>
+	<p id="p2">Number of cols: <input type="text" id="t2" /></p>
+	
+	<button id="b1" onclick="generateTable()">Generate Table</button><br><br>
+	
+	<button id="b2" onclick="addColumn()">Add Column</button>
+	
+	<button id="b3" onclick="addRow()">Add Row</button>
+		
+	<script language="javascript">
+		
+		// function to generate table
+		function generateTable() {
+			const div = document.createElement('div');
+			const rows = parseInt(document.getElementById('t1').value);
+			const cols = parseInt(document.getElementById('t2').value);
+			
+			let tableHTML = '<table border="1">';
+			for (let i = 0; i < rows; i++) {
+				tableHTML += '<tr>';
+				for (let j = 0; j < cols; j++) {
+					tableHTML += '<td>Row ' + (i + 1) + ', Col ' + (j + 1) + '</td>';
+				}
+				tableHTML += '</tr>';
+			}
+			tableHTML += '</table>';
+			
+			// create new div
+			const tableContainer = document.createElement('div');
+			tableContainer.id = 'tableContainer';
+			tableContainer.style.display = 'block';
+			tableContainer.style.paddingTop = "2em";
+			document.body.appendChild(tableContainer);  // append new div to body element
+			tableContainer.innerHTML = tableHTML;
+			
+			// Hide the input fields and text and the "Generate Table" button after table generation
+			
+			document.getElementById('font').style.display = 'none';
+			document.getElementById('p1').style.display = 'none';
+			document.getElementById('p2').style.display = 'none';
+			document.getElementById('b1').style.display = 'none';
+		}
+		
+		// function to add column
+		function addColumn() {
+			const table = document.querySelector('table');
+			const rows = table.querySelectorAll('tr');
+			
+			for (let i = 0; i < rows.length; i++) {
+				const cell = document.createElement('td');
+				cell.textContent = 'Row ' + (i + 1) + ', Col ' + (table.rows[i].cells.length + 1);
+				rows[i].appendChild(cell);
+			}
+		}
+		
+		// function to add row 
+		function addRow() {
+			const table = document.querySelector('table');
+			const cols = table.querySelectorAll('tr:first-child td');
+			const newRow = document.createElement('tr');
+			for (let i = 0; i < cols.length; i++) {
+				const cell = document.createElement('td');
+				cell.textContent = 'Row ' + (table.rows.length + 1) + ', Col ' + (i + 1);;
+				newRow.appendChild(cell);
+			}
+			table.appendChild(newRow);
+		}
+	
+	</script>
+	
+</html>
